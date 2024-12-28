@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
-from urllib.request import urlretrieve
+from mega import Mega
 
 # Set page configuration
 st.set_page_config(
@@ -11,22 +11,30 @@ st.set_page_config(
     layout="wide"
 )
 
-# Function to download model from Google Drive
+# Function to download model from MEGA
 def download_model():
-    # Replace this with your actual direct download link
-    MODEL_URL = "YOUR_DIRECT_DOWNLOAD_LINK"  # Replace with actual link
+    # Replace with your MEGA link
+    MEGA_LINK = "YOUR_MEGA_LINK"  # Example: "https://mega.nz/file/XXXXX#YYYYY"
     
     try:
         if not os.path.exists('models'):
             os.makedirs('models')
         
         if not os.path.exists('models/churn_model.pkl'):
-            with st.spinner('Downloading model... This might take a few minutes...'):
-                urlretrieve(MODEL_URL, 'models/churn_model.pkl')
+            with st.spinner('Downloading model from MEGA... This might take a few minutes...'):
+                mega = Mega()
+                m = mega.login()  # Anonymous login
+                m.download_url(MEGA_LINK, 'models/churn_model.pkl')
                 st.success("Model downloaded successfully!")
     except Exception as e:
         st.error(f"Error downloading model: {str(e)}")
-        st.error("Please download the model manually and place it in a 'models' folder")
+        st.markdown("""
+        ### Manual Download Instructions
+        1. Click the MEGA link below to download the model manually:
+        2. [Download Model from MEGA]({MEGA_LINK})
+        3. Place the downloaded file in a folder named 'models'
+        4. Rename the file to 'churn_model.pkl'
+        """)
         return False
     return True
 
@@ -46,11 +54,19 @@ def load_model():
 # Function to handle the model download process
 def handle_model_download():
     st.markdown("### Download the Model")
-    st.write("If the model is not already available, you can download it from the link below.")
+    st.write("The model file is required for predictions. You can download it from MEGA using the button below.")
     
-    # Add a button to download the model
-    if st.button("Download Model"):
-        download_model()
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        # Add a button to download the model
+        if st.button("Download Model Automatically"):
+            download_model()
+    
+    with col2:
+        st.markdown("""
+        Or download manually:
+        [Download from MEGA](YOUR_MEGA_LINK)
+        """)
 
 def main():
     st.title("📱 Expresso Customer Churn Prediction")
