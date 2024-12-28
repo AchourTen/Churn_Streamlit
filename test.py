@@ -11,10 +11,10 @@ st.set_page_config(
     layout="wide"
 )
 
-# Function to download model
+# Function to download model from Google Drive
 def download_model():
-    # Replace this with your actual drive link
-    MODEL_URL = "YOUR_DIRECT_DOWNLOAD_LINK"
+    # Replace this with your actual direct download link
+    MODEL_URL = "YOUR_DIRECT_DOWNLOAD_LINK"  # Replace with actual link
     
     try:
         if not os.path.exists('models'):
@@ -43,24 +43,26 @@ def load_model():
         st.error(f"Error loading model: {str(e)}")
         return None
 
+# Function to handle the model download process
+def handle_model_download():
+    st.markdown("### Download the Model")
+    st.write("If the model is not already available, you can download it from the link below.")
+    
+    # Add a button to download the model
+    if st.button("Download Model"):
+        download_model()
+
 def main():
     st.title("📱 Expresso Customer Churn Prediction")
     st.markdown("Enter customer information to predict their likelihood of churning.")
     
-    # Check for model and show download instructions if needed
+    # Check if model exists and allow user to download if it doesn't
     if not os.path.exists('models/churn_model.pkl'):
         st.warning("⚠️ Model not found!")
-        st.markdown("""
-        ### Setup Instructions
-        
-        1. Download the model file from [this link](YOUR_DRIVE_LINK)
-        2. Create a folder named 'models' in the same directory as this app
-        3. Place the downloaded model file in the 'models' folder
-        4. Rename the file to 'churn_model.pkl'
-        5. Refresh this page
-        """)
+        handle_model_download()  # Allow user to download the model
         return
     
+    # Load the model
     model = load_model()
     
     if model:
