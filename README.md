@@ -10,27 +10,24 @@ https://drive.google.com/file/d/12_KUHr5NlHO_6bN5SylpkxWc-JvpJNWe/view
 - **Key Features:**
   - Customer demographic and usage data.
   - Target variable: `CHURN` (1 - churned, 0 - not churned).
-| French                 | English                                      |
-|------------------------|----------------------------------------------|
-| **user_id**            | User ID                                      |
-| **REGION**             | The location of each client                  |
-| **TENURE**             | Duration in the network                      |
-| **MONTANT**            | Top-up amount                                |
-| **FREQUENCE_RECH**     | Number of times the customer refilled        |
-| **REVENUE**            | Monthly income of each client                |
-| **ARPU_SEGMENT**       | Income over 90 days / 3                      |
-| **FREQUENCE**          | Number of times the client has made an income|
-| **DATA_VOLUME**        | Number of connections                        |
-| **ON_NET**             | Inter-Expresso call                          |
-| **ORANGE**             | Call to Orange                               |
-| **TIGO**               | Call to Tigo                                 |
-| **ZONE1**              | Call to zone1                                |
-| **ZONE2**              | Call to zone2                                |
-| **MRG**                | A client who is going                        |
-| **REGULARITY**         | Number of times the client is active for 90 days |
-| **TOP_PACK**           | The most active packs                        |
-| **FREQ_TOP_PACK**      | Number of times the client has activated top pack packages |
-| **CHURN**              | Target variable to predict (1 - churned, 0 - not churned) |
+    
+### Feature Descriptions
+| Feature | Description |
+|---------|-------------|
+| REGION | Customer location |
+| TENURE | Duration in the network |
+| MONTANT | Top-up amount |
+| FREQUENCE_RECH | Number of refills |
+| REVENUE | Monthly customer income |
+| ARPU_SEGMENT | Average revenue per user (90-day income/3) |
+| FREQUENCE | Number of income-generating events |
+| DATA_VOLUME | Number of connections |
+| ON_NET | Inter-Expresso calls |
+| MRG | Customer movement indicator |
+| REGULARITY | Number of active days in 90-day period |
+| CHURN | Target variable (1: churned, 0: not churned) |
+
+
 ## Project Structure
 ```
 │  
