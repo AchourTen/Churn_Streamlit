@@ -5,18 +5,21 @@ This project focuses on predicting customer churn using a dataset from Expresso.
 
 ## Dataset
 - **Source:** Expresso Churn Dataset
+https://drive.google.com/file/d/12_KUHr5NlHO_6bN5SylpkxWc-JvpJNWe/view
+
 - **Key Features:**
   - Customer demographic and usage data.
   - Target variable: `CHURN` (1 - churned, 0 - not churned).
 
 ## Project Structure
 ```
-├── model
-│   └── churn_model.pkl  # Trained model file
+│  
 ├── app.py               # Streamlit web application
-├── preprocess_model.py  # Data preprocessing and model training script
+├── Model_training.py  # Data preprocessing and model training script
 ├── README.md            # Project documentation
-└── requirements.txt     # Python dependencies
+├── requirements.txt     # Python dependencies
+└── model/               # NEED TO CREATE THE Directory for storing trained models
+    └── churn_model.pkl  # Saved Random Forest model
 ```
 
 ## Setup Instructions
@@ -48,7 +51,7 @@ This project focuses on predicting customer churn using a dataset from Expresso.
   3. Encode categorical features using LabelEncoder.
   4. Train a Random Forest Classifier.
   5. Evaluate the model using accuracy metrics.
-  6. Save the model using `joblib`.
+  6. Save the model using `joblib` in the `model/` directory as `churn_model.pkl`.
 
 - **Model Accuracy:** Displayed in the console during training.
 
