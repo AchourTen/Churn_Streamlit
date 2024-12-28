@@ -25,8 +25,8 @@ https://drive.google.com/file/d/12_KUHr5NlHO_6bN5SylpkxWc-JvpJNWe/view
 ## Setup Instructions
 1. **Clone Repository:**
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/AchourTen/Churn_Streamlit
+   cd https://github.com/AchourTen/Churn_Streamlit
    ```
 
 2. **Install Dependencies:**
