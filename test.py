@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
-from mega import Mega
 
 # Set page configuration
 st.set_page_config(
@@ -10,33 +9,6 @@ st.set_page_config(
     page_icon="📊",
     layout="wide"
 )
-
-# Function to download model from MEGA
-def download_model():
-    # Replace with your MEGA link
-    MEGA_LINK = "YOUR_MEGA_LINK"  # Example: "https://mega.nz/file/XXXXX#YYYYY"
-    
-    try:
-        if not os.path.exists('models'):
-            os.makedirs('models')
-        
-        if not os.path.exists('models/churn_model.pkl'):
-            with st.spinner('Downloading model from MEGA... This might take a few minutes...'):
-                mega = Mega()
-                m = mega.login()  # Anonymous login
-                m.download_url(MEGA_LINK, 'models/churn_model.pkl')
-                st.success("Model downloaded successfully!")
-    except Exception as e:
-        st.error(f"Error downloading model: {str(e)}")
-        st.markdown("""
-        ### Manual Download Instructions
-        1. Click the MEGA link below to download the model manually:
-        2. [Download Model from MEGA]({MEGA_LINK})
-        3. Place the downloaded file in a folder named 'models'
-        4. Rename the file to 'churn_model.pkl'
-        """)
-        return False
-    return True
 
 # Load the model
 @st.cache_resource
@@ -51,31 +23,29 @@ def load_model():
         st.error(f"Error loading model: {str(e)}")
         return None
 
-# Function to handle the model download process
-def handle_model_download():
-    st.markdown("### Download the Model")
-    st.write("The model file is required for predictions. You can download it from MEGA using the button below.")
+# Function to show download instructions
+def show_download_instructions():
+    st.markdown("### Model Download Instructions")
+    st.markdown("""
+    To use this application, you need to download the model file:
     
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        # Add a button to download the model
-        if st.button("Download Model Automatically"):
-            download_model()
+    1. Download the model from this MEGA link: [Download Model](YOUR_MEGA_LINK)
+    2. Create a folder named 'models' in the same directory as this app
+    3. Place the downloaded file in the 'models' folder
+    4. Rename the file to 'churn_model.pkl'
+    5. Refresh this page
     
-    with col2:
-        st.markdown("""
-        Or download manually:
-        [Download from MEGA](YOUR_MEGA_LINK)
-        """)
+    Note: The model file is large (3.05 GB), so the download might take some time depending on your internet connection.
+    """)
 
 def main():
     st.title("📱 Expresso Customer Churn Prediction")
     st.markdown("Enter customer information to predict their likelihood of churning.")
     
-    # Check if model exists and allow user to download if it doesn't
+    # Check if model exists
     if not os.path.exists('models/churn_model.pkl'):
         st.warning("⚠️ Model not found!")
-        handle_model_download()  # Allow user to download the model
+        show_download_instructions()
         return
     
     # Load the model
